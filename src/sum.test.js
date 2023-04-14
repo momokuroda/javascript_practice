@@ -33,7 +33,8 @@ test(`letの練習`, () => {
 
 test('console.logの練習', () => {
   const total = 42+42;
-  total;
-  console.log("total");
-  total;
+  console.log(total);
+
+  const value = '値';
+  console.log(value);
 });
