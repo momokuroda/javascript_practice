@@ -38,3 +38,20 @@ test('console.logの練習', () => {
   const value = '値';
   console.log(value);
 });
+
+test('文字列の練習', () => {
+  const str1 = "文字列です";
+  const str2 = '文字列です';
+  expect(str1 === str2).toBe(true);
+
+  const str3 = `文字列
+です`;
+  const str4 = "文字列\nです";
+  expect(str3 === str4).toBe(true);
+  
+  const str5 = "これは${str1}";
+  const str6 = `これは${str1}`;
+  expect(str5).toBe("これは${str1}");
+  expect(str6).toBe("これは文字列です");
+});
+
