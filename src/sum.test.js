@@ -55,3 +55,29 @@ test('文字列の練習', () => {
   expect(str6).toBe("これは文字列です");
 });
 
+test('オブジェクトの練習', () => {
+  const object = {
+    address : "東京",
+    telephone : "03-0000-0000",
+    age : 18,
+    hasLicense : true,
+    nested : {
+      valuea : 1,
+    }
+  }
+  expect(object.address).toBe("東京");
+  expect(object.telephone).toBe("03-0000-0000");
+  expect(object["age"]).toBe(18);
+  expect(object["hasLicense"]).toBe(true);
+  expect(object.nested.valuea).toBe(1);
+});
+
+test('配列の練習', () => {
+  const array = ["aaa",111,true,{age:20,address:"東京"}];
+
+  expect(array[0]).toBe("aaa");
+  expect(array[1]).toBe(111);
+  expect(array[2]).toBe(true);
+  expect(array[3].age).toBe(20);
+  expect(array[3].address).toBe("東京");
+});
