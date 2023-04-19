@@ -108,4 +108,3 @@ test('配列の練習', () => {
   expect(array[3].age).toBe(20);
   expect(array[3].address).toBe("東京");
 });
-
