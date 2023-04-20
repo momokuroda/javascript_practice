@@ -109,18 +109,3 @@ test('配列の練習', () => {
   expect(array[3].address).toBe("東京");
 });
 
-test('三項演算子の練習', () => {
-function addPrefix(text, prefix) {
-    // `prefix`が指定されていない場合は"デフォルト:"を付ける
-    const pre = typeof prefix === "string" ? prefix : "デフォルト:";
-    return pre + text;
-}
-
-// console.log(addPrefix("文字列")); // => "デフォルト:文字列"
-// console.log(addPrefix("文字列", "カスタム:")); // => "カスタム:文字列"
-
-expect(typeof"文字列").toBe("string");
-expect(typeof undefined).toBe("undefined");
-expect(addPrefix("abc")).toBe("デフォルト:abc");
-expect(addPrefix("abc","アルファベット:")).toBe("アルファベット:abc");
-});
