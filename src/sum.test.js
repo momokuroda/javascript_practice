@@ -109,3 +109,58 @@ test('配列の練習', () => {
   expect(array[3].address).toBe("東京");
 });
 
+test('三項演算子の練習', () => {
+  function addPrefix(text, prefix) {
+      // `prefix`が指定されていない場合は"デフォルト:"を付ける
+      const pre = typeof prefix === "string" ? prefix : "デフォルト:";
+      return pre + text;
+  }
+  
+  // console.log(addPrefix("文字列")); // => "デフォルト:文字列"
+  // console.log(addPrefix("文字列", "カスタム:")); // => "カスタム:文字列"
+  
+  expect(typeof"文字列").toBe("string");
+  expect(typeof undefined).toBe("undefined");
+  expect(addPrefix("abc")).toBe("デフォルト:abc");
+  expect(addPrefix("abc","アルファベット:")).toBe("アルファベット:abc");
+  });
+  
+  
+  test('elseの練習', () => {
+    const a = function(year) {
+      if (year % 400 === 0) { // 400で割り切れる
+      return true;
+  } else if (year % 100 === 0) { // 100で割り切れる
+    return false;
+  } else if (year % 4 === 0) { // 4で割り切れる
+    return true;
+  } else { // それ以外
+    return false;
+  }}
+  
+    expect(a(2000)).toBe(true);
+    expect(a(2023)).toBe(false);
+  });
+  
+  test('switch文の練習', () => {
+    const version = function(num){
+      switch(num % 4){
+        case 0:
+          return "グー";
+        case 1:
+          return "チョキ";
+        case 2:
+          return "パー";
+        case 3:
+          return "あいこ";
+      }
+    }
+  
+  expect(version(0)).toBe("グー");
+  expect(version(1)).toBe("チョキ");
+  expect(version(2)).toBe("パー");
+  expect(version(3)).toBe("あいこ");
+  expect(version(4)).toBe("グー");
+  expect(version(14)).toBe("パー");
+  
+  });
