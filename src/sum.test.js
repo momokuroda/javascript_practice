@@ -164,3 +164,50 @@ test('三項演算子の練習', () => {
   expect(version(14)).toBe("パー");
   
   });
+
+  test('Number.parseInt, Number.parseFloat文の練習', () => {
+    //"10"をパース(分析)して、10進数として表示する
+    expect(Number.parseInt("10",10)).toBe(10);
+    expect(Number.parseInt("10",10)).not.toBe("10");
+    expect(Number.parseInt("10")).toBe(10);
+
+    expect(Number.parseFloat("3.14",10)).toBe(3.14);
+    expect(Number.parseFloat("3.14",10)).not.toBe("10");
+    expect(Number.parseFloat("3.14")).toBe(3.14);
+
+    expect(Number.parseInt("3.99")).toBe(3);
+    //Numberコンストラクタ関数は数字以外の文字列を渡すとNaNになる
+    expect(Number.parseInt("AAA")).toBe(NaN);
+    //NaNになってしまった場合の処理を書く必要がある↓
+    //Number.isNaN(x)の返り値は真偽値。
+    expect(Number.isNaN(Number.parseInt("AAA"))).toBe(true);
+
+  });
+
+
+  test('functionの練習', () => {
+    function double(num){
+      return num * 2;
+    }
+    expect(double(3)).toBe(6);
+
+    function echo(x){
+      return x;
+    }
+    expect(echo(1)).toBe(1);
+    expect(echo()).toBe(undefined);
+
+  });
+
+  test('デフォルト引数の練習', () => {
+    function addPrefix2(text, prefix = "デフォルト:") {
+        // `prefix`が指定されていない場合は"デフォルト:"を付ける
+        return pre = prefix + text;
+    }
+    
+    // console.log(addPrefix("文字列")); // => "デフォルト:文字列"
+    // console.log(addPrefix("文字列", "カスタム:")); // => "カスタム:文字列"
+    
+    expect(addPrefix2("abc")).toBe("デフォルト:abc");
+    expect(addPrefix2("abc","d")).toBe("dabc");
+    });
