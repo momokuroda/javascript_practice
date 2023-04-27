@@ -211,3 +211,4 @@ test('三項演算子の練習', () => {
     expect(addPrefix2("abc")).toBe("デフォルト:abc");
     expect(addPrefix2("abc","d")).toBe("dabc");
     });
+  });
