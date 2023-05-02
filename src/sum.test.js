@@ -213,13 +213,13 @@ test("デフォルト引数の練習", () => {
 });
 
 test("functionとarrow functionの練習", () => {
-  const a = function(value){
-      return value*value;
-  }
-  const b = (value) =>  {
-    return value * value
+  const a = function (value) {
+    return value * value;
   };
-  const c = value => value * value;
+  const b = (value) => {
+    return value * value;
+  };
+  const c = (value) => value * value;
 
   expect(a(2)).toBe(4);
   expect(b(6)).toBe(36);
