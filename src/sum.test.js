@@ -211,3 +211,17 @@ test("デフォルト引数の練習", () => {
   expect(addPrefix2("abc")).toBe("デフォルト:abc");
   expect(addPrefix2("abc", "d")).toBe("dabc");
 });
+
+test("functionとarrow functionの練習", () => {
+  const a = function (value) {
+    return value * value;
+  };
+  const b = (value) => {
+    return value * value;
+  };
+  const c = (value) => value * value;
+
+  expect(a(2)).toBe(4);
+  expect(b(6)).toBe(36);
+  expect(c(9)).toBe(81);
+});
