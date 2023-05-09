@@ -225,3 +225,48 @@ test("functionとarrow functionの練習", () => {
   expect(b(6)).toBe(36);
   expect(c(9)).toBe(81);
 });
+
+test("for文の練習", () => {
+  function sum(max) {
+    let total = 0;
+    for (let i = 0; i < max; i++) {
+      total += i + 1;
+    }
+    return total;
+  }
+
+  expect(sum(4)).toBe(10);
+  expect(sum(10)).toBe(55);
+});
+
+test("for文の練習2", () => {
+  function sum(numbers) {
+    let total = 0;
+    //numbers.lengthには配列の個数が入る
+    for (let i = 0; i < numbers.length; i++) {
+      total += numbers[i];
+    }
+    return total;
+  }
+
+  expect(sum([1])).toBe(1);
+  expect(sum([])).toBe(0);
+  expect(sum([1, 2, 3, 4])).toBe(10);
+});
+
+test("break文の練習", () => {
+  function isEvenIncluded(numbers) {
+    let isEven = false;
+    for (let i = 0; i < numbers.length; i++) {
+      if (numbers[i] % 2 === 0) {
+        isEven = true;
+        break;
+      }
+    }
+    return isEven;
+  }
+
+  expect(isEvenIncluded([1])).toBe(false);
+  expect(isEvenIncluded([])).toBe(false);
+  expect(isEvenIncluded([1, 2, 3, 4])).toBe(true);
+});
