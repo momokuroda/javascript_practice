@@ -331,9 +331,53 @@ test("some/filterの練習", () => {
     })
   ).toStrictEqual([1, 3, 5]);
   expect(array.filter((number) => number % 2 !== 0)).toStrictEqual([1, 3, 5]);
+});
 
-  // expect(isEvenIncluded([])).toBe(false);
-  // expect(isEvenIncluded([1, 2, 3, 4])).toBe(true);
+test("objectの練習", () => {
+  const obj = {};
+  //Object.keysでプロパティのkeyをすべて配列(string)でとってきてくれる
+  expect(Object.keys(obj).length).toBe(0);
+  expect(Object.keys(obj)).toStrictEqual([]);
+  const blueGreen = "blue-green";
+  const color = {
+    red: "red",
+    green: "green",
+    blue: "blue",
+    [blueGreen]: "blue-green",
+  };
+
+  expect(Object.keys(color)).toStrictEqual([
+    "red",
+    "green",
+    "blue",
+    "blue-green",
+  ]);
+  expect(Object.keys(color).length).toStrictEqual(4);
+  expect(color.red).toBe("red");
+  expect(color.green).toBe("green");
+  expect(color.blue).toBe("blue");
+
+  //省略
+  const AAA = "あああ";
+
+  const A1 = {
+    AAA: AAA,
+  };
+  //プロパティ名(AAA)と値に指定する変数名(AAA)が同じ場合、以下の様に省略できる
+  const A2 = {
+    AAA,
+  };
+
+  expect(A1).toStrictEqual(A2);
+
+  //オブジェクトの追加
+  //ドット記法
+  color.orange = "orange";
+  expect(color.orange).toStrictEqual("orange");
+
+  //ブラケット記法
+  // color["blue-green"] = "blue-green";
+  expect(color["blue-green"]).toStrictEqual("blue-green");
 });
 
 test("if/elseifの練習", () => {
