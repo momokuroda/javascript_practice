@@ -397,3 +397,24 @@ test("if/elseifの練習", () => {
   expect(a("ES7")).toBe("ECMAScript 2016");
   expect(a(2)).toBe("unknown");
 });
+
+test("オブジェクトの練習", () => {
+  //プロパティのチェック方法
+  const obj = {
+    one: 1,
+  };
+
+  expect(obj.one).toStrictEqual(1);
+  //undefinedでチェックする方法
+  expect(obj.two).toStrictEqual(undefined);
+
+  //object.hasOwnを呼び出す練習
+  expect(Object.hasOwn(obj, "one")).toStrictEqual(true);
+  expect(Object.hasOwn(obj, "two")).toStrictEqual(false);
+
+  //object.keys,object.values,object.entriesを呼び出してテストコードで動きの確認
+  expect(Object.keys(obj)).toStrictEqual(["one"]);
+  expect(Object.values(obj)).toStrictEqual([1]);
+  //オブジェクトの"プロパティ名と値の配列"の配列を返すことに注意
+  expect(Object.entries(obj)).toStrictEqual([["one", 1]]);
+});
