@@ -418,3 +418,24 @@ test("オブジェクトの練習", () => {
   //オブジェクトの"プロパティ名と値の配列"の配列を返すことに注意
   expect(Object.entries(obj)).toStrictEqual([["one", 1]]);
 });
+
+test("Object assign/spred構文の練習", () => {
+  const obj1 = { one: 1, two: 2, three: 3 };
+  const obj2 = { four: 4, five: 5, three: 30 };
+
+  expect(Object.assign({}, obj1, obj2)).toStrictEqual({
+    one: 1,
+    two: 2,
+    three: 30,
+    four: 4,
+    five: 5,
+  });
+  expect({ ...obj1, ...obj2, six: 6 }).toStrictEqual({
+    one: 1,
+    two: 2,
+    three: 30,
+    four: 4,
+    five: 5,
+    six: 6,
+  });
+});
