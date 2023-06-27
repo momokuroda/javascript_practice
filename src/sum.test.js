@@ -461,3 +461,61 @@ test("indexofの練習", () => {
   expect(array1.indexOf({ blue: "青" })).toStrictEqual(-1);
   expect(array1.indexOf(obj)).toStrictEqual(3);
 });
+
+test("findindex/findの練習", () => {
+  const obj = { test: "社会" };
+  const subject = [
+    { test: "国語" },
+    { test: "数学" },
+    { test: "英語" },
+    obj,
+    { test: "社会" },
+  ];
+
+  // findindex
+  expect(
+    subject.findIndex((obj) => {
+      return obj.test === "英語";
+    })
+  ).toStrictEqual(2);
+  // [memo]{ test: "社会" }のオブジェクトが2つあっても条件を満たす最初の要素のindexを返す
+  expect(
+    subject.findIndex((obj) => {
+      return obj.test === "社会";
+    })
+  ).toStrictEqual(3);
+
+  // find
+  expect(
+    subject.find((obj) => {
+      return obj.test === "社会";
+    })
+  ).toStrictEqual({ test: "社会" });
+
+  expect(
+    subject.find((obj) => {
+      return false;
+    })
+  ).toStrictEqual(undefined);
+});
+
+test("slice/includesの練習", () => {
+  const obj = { test: "社会" };
+  const subject = [1, 2, 3, obj];
+  // slice
+  expect(subject.slice(0, 2)).toStrictEqual([1, 2]);
+  expect(subject.slice(-1)).toStrictEqual([obj]);
+  // includes
+  expect(subject.includes(obj)).toStrictEqual(true);
+});
+
+test("someの練習", () => {
+  const obj = { test: "社会" };
+  const subject = [{ test: "国語" }, { test: "数学" }, { test: "英語" }, obj];
+
+  expect(
+    subject.some((obj) => {
+      return obj.test === "社会";
+    })
+  ).toStrictEqual(true);
+});
