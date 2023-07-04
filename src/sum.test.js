@@ -519,3 +519,20 @@ test("someの練習", () => {
     })
   ).toStrictEqual(true);
 });
+
+test("push/concat/flat/spliceの練習", () => {
+  const array = ["A", "B", "C"];
+  // pushは配列を渡すと、[]がついたまま配列に追加される(一次元高くなる)
+  array.push(["D", "E"]);
+  // concatは配列を渡すと、[]を除く中身のみ配列に追加される(次元は変わらない)
+  const arrayConcat = array.concat(["F", "G"]);
+
+  expect(array).toStrictEqual(["A", "B", "C", ["D", "E"]]);
+  expect(arrayConcat).toStrictEqual(["A", "B", "C", ["D", "E"], "F", "G"]);
+  expect(arrayConcat.flat()).toStrictEqual(["A", "B", "C", "D", "E", "F", "G"]);
+
+  array.splice(1, 3);
+  arrayConcat.splice(2, 3);
+  expect(array).toStrictEqual(["A"]);
+  expect(arrayConcat).toStrictEqual(["A", "B", "G"]);
+});
