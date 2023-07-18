@@ -536,3 +536,88 @@ test("push/concat/flat/spliceの練習", () => {
   expect(array).toStrictEqual(["A"]);
   expect(arrayConcat).toStrictEqual(["A", "B", "G"]);
 });
+
+test("mapの練習", () => {
+  const array = [1, 2, 3];
+
+  expect(
+    array.map((number) => {
+      return number * 10;
+    })
+  ).toStrictEqual([10, 20, 30]);
+  // allow functionの省略記法
+  expect(array.map((number) => number * 10)).toStrictEqual([10, 20, 30]);
+
+  const array2 = [{ color: "オレンジ" }, { color: "青" }, { color: "ピンク" }];
+  expect(array2.map((obj) => obj.color)).toStrictEqual([
+    "オレンジ",
+    "青",
+    "ピンク",
+  ]);
+
+  const array3 = [-3, -2, -1, 0, 1, 2, 3];
+  expect(
+    array3.map((number) => {
+      if (number < 0) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+  ).toStrictEqual([false, false, false, true, true, true, true]);
+  // 上記のシンプルな書き換え↓
+  expect(
+    array3.map((number) => {
+      return number >= 0;
+    })
+  ).toStrictEqual([false, false, false, true, true, true, true]);
+});
+
+test("filterの練習", () => {
+  const array = [1, 4, 7, 9];
+
+  expect(array.filter((number) => number % 2 === 1)).toStrictEqual([1, 7, 9]);
+  expect(array.filter((number) => number % 2 === 0)).toStrictEqual([4]);
+
+  const array2 = [
+    { fruits: "オレンジ" },
+    { fruits: "イチゴ" },
+    { fruits: "バナナ" },
+    { fruits: "マンゴー" },
+  ];
+  const array3 = ["オレンジ", "イチゴ"];
+  expect(array2.filter((obj) => array3.includes(obj.fruits))).toStrictEqual([
+    { fruits: "オレンジ" },
+    { fruits: "イチゴ" },
+  ]);
+});
+
+test("mapとfilterの練習", () => {
+  const array2 = [
+    { fruits: "オレンジ" },
+    { fruits: "イチゴ" },
+    { fruits: "バナナ" },
+    { fruits: "マンゴー" },
+  ];
+  const array3 = ["オレンジ"];
+  expect(
+    array2
+      .filter((obj) => array3.includes(obj.fruits))
+      .map((obj) => "一番好きな果物は" + obj.fruits + "です")
+  ).toStrictEqual(["一番好きな果物はオレンジです"]);
+});
+
+test("mapの練習2", () => {
+  const array = ["A", "B", "C"];
+  const obj = [{ value: "A" }, { value: "B" }, { value: "C" }];
+
+  expect(
+    array.map((v) => v.toLowerCase()).map((v) => ({ value: v }))
+  ).toStrictEqual([{ value: "a" }, { value: "b" }, { value: "c" }]);
+
+  expect(array.map((v) => ({ value: v.toLocaleLowerCase() }))).toStrictEqual([
+    { value: "a" },
+    { value: "b" },
+    { value: "c" },
+  ]);
+});
