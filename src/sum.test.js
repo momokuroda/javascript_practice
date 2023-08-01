@@ -621,3 +621,27 @@ test("mapの練習2", () => {
     { value: "c" },
   ]);
 });
+
+test("indexof/starts,endsWith/includesの練習", () => {
+  const Yen = "円";
+  const price = "￥１，０００";
+  const priceWithoutSymbol = price.slice(1);
+  const priceWithYen = priceWithoutSymbol.concat(Yen);
+
+  // indexof
+  expect(price.indexOf("￥")).toStrictEqual(0);
+  // priceに"円"は含まれないので-1が返ってくる
+  expect(price.indexOf(Yen)).toStrictEqual(-1);
+  // マッチした最初の文字のインデックスを返す
+  expect(priceWithYen.indexOf("００")).toStrictEqual(2);
+
+  // starts/endsWith
+  expect(price.startsWith("￥")).toStrictEqual(true);
+  expect(priceWithYen.startsWith("￥")).toStrictEqual(false);
+  expect(price.endsWith("円")).toStrictEqual(false);
+  expect(priceWithYen.endsWith("円")).toStrictEqual(true);
+
+  // includes
+  expect(price.includes("１，０００")).toStrictEqual(true);
+  expect(priceWithYen.includes("1,000")).toStrictEqual(false);
+});
