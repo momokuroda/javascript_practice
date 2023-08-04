@@ -645,3 +645,41 @@ test("indexof/starts,endsWith/includesの練習", () => {
   expect(price.includes("１，０００")).toStrictEqual(true);
   expect(priceWithYen.includes("1,000")).toStrictEqual(false);
 });
+
+test("正規表現の練習", () => {
+  const text = `RegExr was created by gskinner.com.
+
+  Edit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & JavaScript flavors of RegEx are supported. Validate your expression with Tests mode.
+  
+  The side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community and view patterns you create or favorite in My Patterns.
+  
+  Explore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.
+  `;
+
+  const pattern = /[A-Z]\w+/;
+  const pattern2 = /\w+\s[&]\s\w+/g;
+  const result = text.match(pattern);
+
+  expect(result.length).toStrictEqual(1);
+  // gフラグなしのmatchメソッドの返り値はindex,inputプロパティを含んだ特殊な文字列になるため、
+  // マッチした文字列を取得したい場合は、インデックスでアクセスする必要がある。
+  expect(result[0]).toStrictEqual("RegExr");
+  // gフラグありのmatchメソッドの返り値は配列になる
+  expect(text.match(pattern2)).toStrictEqual([
+    "Expression & Text",
+    "PCRE & JavaScript",
+    "Save & Share",
+    "Replace & List",
+  ]);
+
+  const pattern3 = /[A-Z]\w+(\d+4)/g;
+  const matchesIterator = "Japan2020,Brazil2016,UK2012,China2008".matchAll(
+    pattern3
+  );
+  for (const match of matchesIterator) {
+    expect(match[0]).toStrictEqual("Japan2020");
+    expect(match[1]).toStrictEqual("2020");
+    expect(match.index).toStrictEqual(0);
+    expect(match.input).toStrictEqual("Japan2020,Brazil2016,UK2012,China2008");
+  }
+});
