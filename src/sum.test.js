@@ -645,3 +645,86 @@ test("indexof/starts,endsWith/includesの練習", () => {
   expect(price.includes("１，０００")).toStrictEqual(true);
   expect(priceWithYen.includes("1,000")).toStrictEqual(false);
 });
+
+test("正規表現の練習", () => {
+  const text = `RegExr was created by gskinner.com.
+
+  Edit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & JavaScript flavors of RegEx are supported. Validate your expression with Tests mode.
+  
+  The side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community and view patterns you create or favorite in My Patterns.
+  
+  Explore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.
+  `;
+
+  const pattern = /[A-Z]\w+/;
+  const pattern2 = /\w+\s[&]\s\w+/g;
+  const result = text.match(pattern);
+
+  expect(result.length).toStrictEqual(1);
+  // gフラグなしのmatchメソッドの返り値はindex,inputプロパティを含んだ特殊な文字列になるため、
+  // マッチした文字列を取得したい場合は、インデックスでアクセスする必要がある。
+  expect(result[0]).toStrictEqual("RegExr");
+  // gフラグありのmatchメソッドの返り値は配列になる
+  expect(text.match(pattern2)).toStrictEqual([
+    "Expression & Text",
+    "PCRE & JavaScript",
+    "Save & Share",
+    "Replace & List",
+  ]);
+
+  const pattern3 = /[A-Z]\w+(\d{4})/g;
+  const matchesIterator = "Japan2020,Brazil2016,UK2012,China2008".matchAll(
+    pattern3
+  );
+  const matched = [];
+  for (const match of matchesIterator) {
+    matched.push(match);
+  }
+  const expected = [["Japan2020"]];
+  // テスト文を書く時には、for文がきちんと回ったか？という観点を見ればいいので、lengthが確認できたらよい。
+  expect(matched.length).toStrictEqual(4);
+  // serializes to the same stringというエラーが出てしまう。。
+  // mathched[0]は特殊な配列で返ってくるため、配列[0]のさらに[0]番目の配列にアクセスすると文字列として帰ってくる
+  // 特殊な配列[0]↓
+  // [
+  //   'Japan2020',　　//[0]番目
+  //   '2020',         //[1]番目
+  //   index: 0,
+  //   input: 'Japan2020,Brazil2016,UK2012,China2008',
+  //   groups: undefined
+  // ]
+  // expect(matched[0]).toStrictEqual(
+  //   ['Japan2020','2020']
+  // );
+
+  expect(matched[0][0]).toStrictEqual("Japan2020");
+  expect(matched[0][1]).toStrictEqual("2020");
+  expect(matched[0].input).toStrictEqual(
+    "Japan2020,Brazil2016,UK2012,China2008"
+  );
+  expect(matched[1][0]).toStrictEqual("Brazil2016");
+  expect(matched[1].index).toStrictEqual(10);
+  expect(matched[2][0]).toStrictEqual("UK2012");
+  expect(matched[2].index).toStrictEqual(21);
+  expect(matched[3][0]).toStrictEqual("China2008");
+  expect(matched[3][1]).toStrictEqual("2008");
+});
+
+test("正規表現(真偽値)の練習2", () => {
+  const phoneNum = ["000-0000-0000", "999-9999-9999", "123-4567-8910"];
+  const notPhoneNum = [
+    "aaa-bbbb-1111",
+    "ああ-1122-1123",
+    "123-0000",
+    "a123-4567-8901",
+    "123-4567-89010",
+  ];
+  const pattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+  for (const test of phoneNum) {
+    expect(pattern.test(test)).toStrictEqual(true);
+  }
+
+  for (const test of notPhoneNum) {
+    expect(pattern.test(test)).toStrictEqual(false);
+  }
+});
