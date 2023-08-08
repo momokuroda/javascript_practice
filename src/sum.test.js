@@ -680,13 +680,26 @@ test("正規表現の練習", () => {
   for (const match of matchesIterator) {
     matched.push(match);
   }
+  // テスト文を書く時には、for文がきちんと回ったか？という観点を見ればいいので、lengthが確認できたらよい。
   expect(matched.length).toStrictEqual(4);
   // serializes to the same stringというエラーが出てしまう。。
-  // expect(matched[0]).toStrictEqual(["Japan2020", "2020"]);
-  // expect(matched).toStrictEqual([
-  //   ["Japan2020", "2020"],
-  //   ["Brazil2016", "2016"],
-  //   ["UK2012", "2012"],
-  //   ["China2008", "2008"],
-  // ]);
+  // mathched[0]は特殊な配列で返ってくるため、配列[0]のさらに[0]番目の配列にアクセスすると文字列として帰ってくる
+  // 特殊な配列[0]↓
+  // [
+  //   'Japan2020',　　//[0]番目
+  //   '2020',         //[1]番目
+  //   index: 0,
+  //   input: 'Japan2020,Brazil2016,UK2012,China2008',
+  //   groups: undefined
+  // ]
+  expect(matched[0][0]).toStrictEqual("Japan2020");
+  expect(matched[0].input).toStrictEqual(
+    "Japan2020,Brazil2016,UK2012,China2008"
+  );
+  expect(matched[1][0]).toStrictEqual("Brazil2016");
+  expect(matched[1].index).toStrictEqual(10);
+  expect(matched[2][0]).toStrictEqual("UK2012");
+  expect(matched[2].index).toStrictEqual(21);
+  expect(matched[3][0]).toStrictEqual("China2008");
+  expect(matched[3][1]).toStrictEqual("2008");
 });
