@@ -676,7 +676,17 @@ test("正規表現の練習", () => {
   const matchesIterator = "Japan2020,Brazil2016,UK2012,China2008".matchAll(
     pattern3
   );
+  const matched = [];
   for (const match of matchesIterator) {
-    console.log(match);
+    matched.push(match);
   }
+  expect(matched.length).toStrictEqual(4);
+  // serializes to the same stringというエラーが出てしまう。。
+  // expect(matched[0]).toStrictEqual(["Japan2020", "2020"]);
+  // expect(matched).toStrictEqual([
+  //   ["Japan2020", "2020"],
+  //   ["Brazil2016", "2016"],
+  //   ["UK2012", "2012"],
+  //   ["China2008", "2008"],
+  // ]);
 });
