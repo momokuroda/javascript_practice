@@ -680,6 +680,7 @@ test("正規表現の練習", () => {
   for (const match of matchesIterator) {
     matched.push(match);
   }
+  const expected = [["Japan2020"]];
   // テスト文を書く時には、for文がきちんと回ったか？という観点を見ればいいので、lengthが確認できたらよい。
   expect(matched.length).toStrictEqual(4);
   // serializes to the same stringというエラーが出てしまう。。
@@ -692,7 +693,12 @@ test("正規表現の練習", () => {
   //   input: 'Japan2020,Brazil2016,UK2012,China2008',
   //   groups: undefined
   // ]
+  // expect(matched[0]).toStrictEqual(
+  //   ['Japan2020','2020']
+  // );
+
   expect(matched[0][0]).toStrictEqual("Japan2020");
+  expect(matched[0][1]).toStrictEqual("2020");
   expect(matched[0].input).toStrictEqual(
     "Japan2020,Brazil2016,UK2012,China2008"
   );
@@ -702,4 +708,23 @@ test("正規表現の練習", () => {
   expect(matched[2].index).toStrictEqual(21);
   expect(matched[3][0]).toStrictEqual("China2008");
   expect(matched[3][1]).toStrictEqual("2008");
+});
+
+test("正規表現(真偽値)の練習2", () => {
+  const phoneNum = ["000-0000-0000", "999-9999-9999", "123-4567-8910"];
+  const notPhoneNum = [
+    "aaa-bbbb-1111",
+    "ああ-1122-1123",
+    "123-0000",
+    "a123-4567-8901",
+    "123-4567-89010",
+  ];
+  const pattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+  for (const test of phoneNum) {
+    expect(pattern.test(test)).toStrictEqual(true);
+  }
+
+  for (const test of notPhoneNum) {
+    expect(pattern.test(test)).toStrictEqual(false);
+  }
 });
