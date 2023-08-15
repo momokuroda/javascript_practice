@@ -728,3 +728,19 @@ test("正規表現(真偽値)の練習2", () => {
     expect(pattern.test(test)).toStrictEqual(false);
   }
 });
+
+test("replace/replaceAllの練習", () => {
+  const phoneNum = "090-1143-5679";
+
+  const pattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+  const pattern2 = /[0-9]/;
+  const patternGlobal = /[0-9]/g;
+  expect(phoneNum.replace("9", "7")).toStrictEqual("070-1143-5679");
+  expect(phoneNum.replaceAll("9", "7")).toStrictEqual("070-1143-5677");
+  expect(phoneNum.replace(pattern, "a")).toStrictEqual("a");
+  expect(phoneNum.replace(pattern2, "a")).toStrictEqual("a90-1143-5679");
+  // replaceAllのパターンにはgフラグをつける必要がある
+  expect(phoneNum.replaceAll(patternGlobal, "a")).toStrictEqual(
+    "aaa-aaaa-aaaa"
+  );
+});
