@@ -744,3 +744,35 @@ test("replace/replaceAllの練習", () => {
     "aaa-aaaa-aaaa"
   );
 });
+
+test("クラスの練習", () => {
+  class TennisRacket {
+    constructor(maker, color, weight) {
+      this.maker = maker;
+      this.color = color;
+      this.weight = weight;
+      this.numOfHit = 0;
+    }
+    hit() {
+      this.numOfHit++;
+    }
+  }
+  const yonexRacket = new TennisRacket("yonex", "pink", 120);
+  const babolatRacket = new TennisRacket("babolat", "red", 100);
+  expect(yonexRacket.maker).toStrictEqual("yonex");
+  expect(yonexRacket.color).toStrictEqual("pink");
+  expect(yonexRacket.weight).toStrictEqual(120);
+  expect(babolatRacket.maker).toStrictEqual("babolat");
+  expect(babolatRacket.color).toStrictEqual("red");
+  expect(babolatRacket.weight).toStrictEqual(100);
+
+  const yonexRacket2 = new TennisRacket("yonex", "pink", 120);
+  expect(yonexRacket === yonexRacket2).toStrictEqual(false);
+
+  yonexRacket.hit();
+  yonexRacket.hit();
+  yonexRacket.hit();
+  expect(yonexRacket.numOfHit).toStrictEqual(3);
+  expect(babolatRacket.numOfHit).toStrictEqual(0);
+  expect(yonexRacket2.numOfHit).toStrictEqual(0);
+});
