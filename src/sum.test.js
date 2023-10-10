@@ -776,3 +776,9 @@ test("クラスの練習", () => {
   expect(babolatRacket.numOfHit).toStrictEqual(0);
   expect(yonexRacket2.numOfHit).toStrictEqual(0);
 });
+
+// test("非同期処理の練習", () => {
+//   return new Promise(() => {
+//     expect(0).toStrictEqual(3);
+//   });
+// });
