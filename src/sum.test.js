@@ -1,4 +1,4 @@
-const sum = require("./sum");
+import { sum } from "./sum.mjs";
 
 test("adds 2 + 2 to equal 4", () => {
   expect(sum(2, 2)).toBe(4);
@@ -202,7 +202,7 @@ test("functionの練習", () => {
 test("デフォルト引数の練習", () => {
   function addPrefix2(text, prefix = "デフォルト:") {
     // `prefix`が指定されていない場合は"デフォルト:"を付ける
-    return (pre = prefix + text);
+    return prefix + text;
   }
 
   // console.log(addPrefix("文字列")); // => "デフォルト:文字列"
