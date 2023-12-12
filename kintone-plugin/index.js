@@ -1,5 +1,3 @@
-import { helloWorld } from "./sample.mjs";
-
 ("use strict");
 
 kintone.events.on("app.record.detail.show", (event) => {
@@ -13,14 +11,26 @@ kintone.events.on(submitEvent, (event) => {
   const record = event.record;
 
   if (!record.タイトル.value.match(/^([0-9])+$/)) {
-    window.alert("タイトルには半角数字のみを入力してください");
-    return false;
+    event.error = "タイトルには半角数字のみを入力してください";
+    return event;
   }
 
-  //   if (isNaN(record.タイトル.value)) {
-  //     window.alert("タイトルには数字を入力してください");
-  //     return;
-  //   }
-
   debugger;
+});
+
+// 複数のレコードを取得して、タイトルに数字が入っていないものを抽出する
+kintone.events.on("app.record.index.show", async (event) => {
+  console.log(event);
+
+  const body = {
+    app: kintone.app.getId(),
+  };
+
+  const result = await kintone.api(
+    kintone.api.url("/k/v1/records.json", true),
+    "GET",
+    body
+  );
+  debugger;
+  console.log(result);
 });
