@@ -18,7 +18,7 @@ kintone.events.on(submitEvent, (event) => {
   debugger;
 });
 
-// 複数のレコードを取得して、タイトルに数字が入っていないものを抽出する
+// 複数のレコードを取得して、タイトルがすべて数字ではないものを抽出する
 kintone.events.on("app.record.index.show", async (event) => {
   const record = event.record;
 
@@ -33,26 +33,50 @@ kintone.events.on("app.record.index.show", async (event) => {
   );
 
   const result2 = result.records.filter((v) => {
-    return v.title.value.match(/^([^0-9])+$/);
+    return !/^[0-9]+$/.test(v.title.value);
   });
 
-  const exceptNumberRecords = result2.reverse();
+  const exceptNumberRecords = result2;
 
-  const msgs = [];
-  exceptNumberRecords.forEach((element) => {
-    msgs.push(element.レコード番号.value);
+  const recordIDs = exceptNumberRecords.map((element) => {
+    return element.レコード番号.value;
   });
 
   console.log(
-    `レコード番号${msgs}のレコードはタイトルに数字が含まれています。`
+    `レコード番号${recordIDs}のレコードはタイトルに数字が含まれています。`
   );
 
   // 数字が含まれているレコードの色を変える
-  // const el = kintone.app.getFieldElements("レコード番号");
-  // console.log(el);
-  // el.style.color = "#ff0000"; // 文字色
-  // el.style.backgroundColor = "#ffff00"; // 背景色
-  // el.style.fontSize = "20px"; // サイズ
+  const elements = kintone.app.getFieldElements("レコード番号");
+  console.log(elements);
 
-  // return event;
+  elements.forEach((element) => {
+    const recordNumber = element.textContent;
+    const found = recordIDs.some((recordID) => {
+      return recordID === recordNumber;
+    });
+
+    if (found) {
+      element.classList.add("warn");
+    }
+  });
+});
+
+// 編集、追加画面のイベント
+const editEvent = ["app.record.create.show", "app.record.edit.show"];
+kintone.events.on(editEvent, (event) => {
+  console.log("編集画面表示");
+
+  // ボタンを表示する
+  // ヘッダーのスペースのエレメントを取得
+  const element = kintone.app.record.getHeaderMenuSpaceElement();
+  const button = document.createElement("button");
+  button.textContent = "Hello";
+  button.onclick = () => {
+    console.log("clicked");
+  };
+  element.appendChild(button);
+
+  // TODO:新規レコード画面で、ボタンを押したら全レコードのタイトルの最大値を取得して、
+  // 最大値＋１を計算してタイトルに入力する
 });
