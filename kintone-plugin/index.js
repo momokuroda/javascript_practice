@@ -25,7 +25,6 @@ kintone.events.on("app.record.index.show", async (event) => {
   const body = {
     app: kintone.app.getId(),
   };
-
   const result = await kintone.api(
     kintone.api.url("/k/v1/records.json", true),
     "GET",
@@ -67,16 +66,86 @@ const editEvent = ["app.record.create.show", "app.record.edit.show"];
 kintone.events.on(editEvent, (event) => {
   console.log("編集画面表示");
 
-  // ボタンを表示する
-  // ヘッダーのスペースのエレメントを取得
-  const element = kintone.app.record.getHeaderMenuSpaceElement();
-  const button = document.createElement("button");
-  button.textContent = "Hello";
-  button.onclick = () => {
-    console.log("clicked");
-  };
-  element.appendChild(button);
-
   // TODO:新規レコード画面で、ボタンを押したら全レコードのタイトルの最大値を取得して、
   // 最大値＋１を計算してタイトルに入力する
+
+  // ヘッダーのスペースのエレメントを取得
+  const element = kintone.app.record.getHeaderMenuSpaceElement();
+  // ボタンを表示する
+  const button = document.createElement("button");
+  button.textContent = "最大値+1の入力";
+
+  // ボタン押下処理
+  button.onclick = async () => {
+    console.log("clicked");
+    // 全レコードのタイトル取得
+    const stringIDs = await getIDs();
+    console.log(stringIDs);
+    const maxID = getMaxID(stringIDs);
+  };
+  element.appendChild(button);
 });
+
+// 数字をチェックする関数を実装する
+function isNumber(numberString) {
+  // return
+}
+
+function getMaxID(IDs) {
+  // const numberIDs = IDs.filter((ID) => {
+  //   return Number.isInteger(ID);
+  // }).map((ID) => {
+  //   return Number.parseInt(ID);
+  // });
+
+  // isNumber()を使ってnumberIDsを作成する
+  const numberIDs = IDs.map((ID) => {
+    return Number.parseInt(ID);
+  });
+  console.log(numberIDs);
+  return 100;
+}
+
+async function getIDs() {
+  let ID = "";
+
+  {
+    const body = {
+      app: kintone.app.getId(),
+      fields: ["title"],
+      size: 5,
+    };
+
+    const response = await kintone.api(
+      kintone.api.url("/k/v1/records/cursor.json", true),
+      "POST",
+      body
+    );
+    ID = response.id;
+    console.log(response);
+  }
+  const IDs = [];
+  {
+    const body = {
+      id: ID,
+    };
+
+    let next = true;
+    while (next) {
+      const response = await kintone.api(
+        kintone.api.url("/k/v1/records/cursor.json", true),
+        "GET",
+        body
+      );
+      next = response.next;
+      IDs.push(
+        response.records.map((r) => {
+          return r.title.value;
+        })
+      );
+      console.log(response);
+    }
+  }
+
+  return IDs.flat();
+}
