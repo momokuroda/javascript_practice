@@ -1,9 +1,5 @@
 ("use strict");
 
-kintone.events.on("app.record.detail.show", (event) => {
-  console.log(event);
-});
-
 const submitEvent = ["app.record.create.submit", "app.record.edit.submit"];
 
 // レコード編集した時に、文字列1行の内容を見て、数字でなければエラーにする
@@ -14,8 +10,6 @@ kintone.events.on(submitEvent, (event) => {
     event.error = "タイトルには半角数字のみを入力してください";
     return event;
   }
-
-  debugger;
 });
 
 // 複数のレコードを取得して、タイトルがすべて数字ではないものを抽出する
@@ -47,7 +41,6 @@ kintone.events.on("app.record.index.show", async (event) => {
 
   // 数字が含まれているレコードの色を変える
   const elements = kintone.app.getFieldElements("レコード番号");
-  console.log(elements);
 
   elements.forEach((element) => {
     const recordNumber = element.textContent;
@@ -64,9 +57,7 @@ kintone.events.on("app.record.index.show", async (event) => {
 // 編集、追加画面のイベント
 const editEvent = ["app.record.create.show", "app.record.edit.show"];
 kintone.events.on(editEvent, (event) => {
-  console.log("編集画面表示");
-
-  // TODO:新規レコード画面で、ボタンを押したら全レコードのタイトルの最大値を取得して、
+  // 新規レコード画面で、ボタンを押したら全レコードのタイトルの最大値を取得して、
   // 最大値＋１を計算してタイトルに入力する
 
   // ヘッダーのスペースのエレメントを取得
@@ -77,7 +68,6 @@ kintone.events.on(editEvent, (event) => {
 
   // ボタン押下処理
   button.onclick = async () => {
-    console.log("clicked");
     // 全レコードのタイトル取得
     const stringIDs = await getIDs();
     const maxID = getMaxID(stringIDs);
@@ -89,17 +79,11 @@ kintone.events.on(editEvent, (event) => {
   element.appendChild(button);
 });
 
-// 数字をチェックする関数を実装する
-function isNumber(numberString) {
-  // return
-}
-
 function getMaxID(IDs) {
   // isNumber()を使ってnumberIDsを作成する
   const numberIDs = IDs.map((ID) => {
     return Number.parseInt(ID);
   }).filter((n) => !Number.isNaN(n));
-  console.log(numberIDs);
   return Math.max(...numberIDs) + 1; //numberIDsは配列なので、「...numbersIDs」として配列をspread構文化して渡している
 }
 
@@ -119,7 +103,6 @@ async function getIDs() {
       body
     );
     ID = response.id;
-    console.log(response);
   }
   const IDs = [];
   {
