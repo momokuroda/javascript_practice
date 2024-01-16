@@ -80,8 +80,11 @@ kintone.events.on(editEvent, (event) => {
     console.log("clicked");
     // 全レコードのタイトル取得
     const stringIDs = await getIDs();
-    console.log(stringIDs);
     const maxID = getMaxID(stringIDs);
+
+    const { record } = kintone.app.record.get();
+    record["title"].value = maxID;
+    kintone.app.record.set({ record });
   };
   element.appendChild(button);
 });
@@ -92,18 +95,12 @@ function isNumber(numberString) {
 }
 
 function getMaxID(IDs) {
-  // const numberIDs = IDs.filter((ID) => {
-  //   return Number.isInteger(ID);
-  // }).map((ID) => {
-  //   return Number.parseInt(ID);
-  // });
-
   // isNumber()を使ってnumberIDsを作成する
   const numberIDs = IDs.map((ID) => {
     return Number.parseInt(ID);
-  });
+  }).filter((n) => !Number.isNaN(n));
   console.log(numberIDs);
-  return 100;
+  return Math.max(...numberIDs) + 1; //numberIDsは配列なので、「...numbersIDs」として配列をspread構文化して渡している
 }
 
 async function getIDs() {
